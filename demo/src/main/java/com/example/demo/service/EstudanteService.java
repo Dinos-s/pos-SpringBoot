@@ -4,6 +4,8 @@ package com.example.demo.service;
 // import java.util.ArrayList;
 // import java.util.HashMap;
 // import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Estudante;
+import com.example.demo.entity.Livro;
 import com.example.demo.repository.IEstudanteRepository;
+import com.example.demo.repository.ILivroRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -20,6 +24,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EstudanteService {
     private IEstudanteRepository estudanteRepository;
+    private ILivroRepository livroRepository;
 
     // Listando um estudante:
     public ResponseEntity<Estudante> buscarEstudantePorId(Long id) {
@@ -37,13 +42,24 @@ public class EstudanteService {
 
     // Cadastrando um estudante
     public ResponseEntity<Estudante> cadastrarEstudante(Estudante estudante){
+        Set<Livro> livros = estudante.getLivros();
+        estudante.setLivros(new HashSet<>());
+
         Estudante estudantesSalvo = estudanteRepository.save(estudante);
+        for(Livro livro : livros){
+            livro.setEstudante(Estudante.builder().id(estudante.getId()).build());
+            estudante.getLivros().add(livroRepository.save(livro));
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(estudantesSalvo);
     }
 
     // Atualizar estudante
     public ResponseEntity<Estudante> atualizarEstudante(Long id, Estudante estudante){
         if (estudanteRepository.existsById(id)) {
+            estudante.setId(id);
+            for(Livro livro : estudante.getLivros()){
+                livro.setEstudante(estudante);
+            }
             Estudante estudantesSalvo = estudanteRepository.save(estudante);
             return ResponseEntity.status(HttpStatus.OK).body(estudantesSalvo);
         }
