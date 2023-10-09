@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
@@ -35,14 +36,13 @@ public class Estudante {
     private String email;
     private LocalDate dataNascimento;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.ALL, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Livro> livros = new HashSet<>();
 
     @OneToMany(mappedBy = "estudante")
-    @JsonIgnore
     private Set<AvaliacaoCurso> avaliacaoCursos;
 }

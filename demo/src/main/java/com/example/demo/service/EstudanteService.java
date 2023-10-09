@@ -6,7 +6,10 @@ package com.example.demo.service;
 // import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Optional;
+import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,7 @@ import com.example.demo.entity.Livro;
 import com.example.demo.repository.IEstudanteRepository;
 import com.example.demo.repository.ILivroRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -27,8 +31,15 @@ public class EstudanteService {
     private ILivroRepository livroRepository;
 
     // Listando um estudante:
+    @Transactional
     public ResponseEntity<Estudante> buscarEstudantePorId(Long id) {
         if (estudanteRepository.existsById(id)) {
+            Optional<Estudante> estudanteOpt = estudanteRepository.findById((id));
+            estudanteOpt.ifPresent(e -> {
+                Set<Livro> livros = e.getLivros();
+                System.out.println(livros.size());
+            });
+            Hibernate.initialize(estudanteOpt.get().getLivros());
             return ResponseEntity.status(HttpStatus.OK).body(estudanteRepository.findById(id).get());
         }
 
@@ -73,5 +84,9 @@ public class EstudanteService {
             return ResponseEntity.status(HttpStatus.OK).body("Estudante Deletado com  SUCESSO!");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+    public List<Estudante> buscarEstudantesQueNaoAvaliaram() {
+        return estudanteRepository.findByAvaliacaoCursosEstudanteIsNull();
     }
 }

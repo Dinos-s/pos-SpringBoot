@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-// import java.util.List;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -56,5 +56,10 @@ public class EstudanteController {
     // Removendo Estudante
     public ResponseEntity<String> removerEstudante(@PathVariable Long id) {
         return estudanteService.removerEstudante(id);
+    }
+
+    @GetMapping("/naoAvaliaram")
+    public List<Estudante> buscarEstudantesQueNaoAvaliaram(){
+        return estudanteService.buscarEstudantesQueNaoAvaliaram();
     }
 }

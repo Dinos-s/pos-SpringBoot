@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 
 public class AvaliacaoCursoKey implements Serializable{
 
-    private static final long serialVesionUID = 1L;
+    // private static final long serialVesionUID = 1L;
 
     @Column(name = "estudante_id")
     Long estudanteId;
