@@ -1,4 +1,4 @@
-* Notas do Desenvolvedor
+#Notas do Desenvolvedor
 <ul>
     <li>Falha no processo de renderização da API;</li>
     <li>Todo o código foi feito e refeito minusiosamente para evitar erros;</li>
@@ -6,7 +6,7 @@
     <li>12/10/2022</li>
 </ul>
 
-** Possíveis causas do erro:
+## Possíveis causas do erro:
 <ul>
     <li>Utilização do vscode em vez do eclipse como editor padrão;</li>
     <li>Versão do Java baixado não foi acito corretamente e/ou ainda em fase de testes pela oracle;
