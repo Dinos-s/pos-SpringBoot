@@ -27,10 +27,9 @@ public class securityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-            .securityMatcher("/**")
-            .authorizeHttpRequests()
-            .requestMatchers("/arquivos/upload").permitAll()
-            .anyRequest().authenticated()
+            .authorizeRequests()
+            .mvcMatchers("/arquivos/upload").permitAll()
+            .mvcMatchers("/arquivos/download").authenticated()
             .and()
             .cors()
             .and()

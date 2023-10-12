@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.Estudante;
 import com.example.demo.service.EstudanteService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -27,7 +30,13 @@ public class EstudanteController {
 
     private EstudanteService estudanteService;
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = "apllication/json")
+    @ApiOperation(value = "buscar estudante por id", notes = "Listar um estudante")
+    @ApiResponses({
+        @ApiResponse(code = 401, message = "Acesso não autorizado."),
+        @ApiResponse(code = 403, message = "Proibido."),
+        @ApiResponse(code = 404, message = "Não encontrado."),
+    })
     // Listando um estudante:
     public ResponseEntity<Estudante> buscarEstudantePorId(@PathVariable Long id) {
         return estudanteService.buscarEstudantePorId(id);

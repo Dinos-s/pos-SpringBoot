@@ -1,11 +1,11 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

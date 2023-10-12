@@ -21,7 +21,7 @@ import com.example.demo.entity.Livro;
 import com.example.demo.repository.IEstudanteRepository;
 import com.example.demo.repository.ILivroRepository;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service

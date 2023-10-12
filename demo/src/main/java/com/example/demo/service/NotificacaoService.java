@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.corundumstudio.socketio.SocketIONamespace;
 import com.corundumstudio.socketio.SocketIOServer;
 
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PreDestroy;
 
 @Service
 public class NotificacaoService {
